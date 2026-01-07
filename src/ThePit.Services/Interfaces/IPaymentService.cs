@@ -1,23 +1,15 @@
+using ThePit.Services.DTOs;
+
 namespace ThePit.Services.Interfaces;
 
 public interface IPaymentService
 {
-    Task<PaymentDto?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
-    Task<IEnumerable<PaymentDto>> GetAllAsync(CancellationToken cancellationToken = default);
-    Task<IEnumerable<PaymentDto>> GetByInvoiceIdAsync(int invoiceId, CancellationToken cancellationToken = default);
-    Task<PaymentDto> ProcessPaymentAsync(ProcessPaymentDto dto, CancellationToken cancellationToken = default);
-    Task<bool> RefundAsync(int paymentId, CancellationToken cancellationToken = default);
+    Task<PaymentDto?> GetByIdAsync(int id);
+    Task<PaymentDto?> GetByTransactionIdAsync(string transactionId);
+    Task<IEnumerable<PaymentDto>> GetAllAsync();
+    Task<IEnumerable<PaymentDto>> GetByInvoiceIdAsync(int invoiceId);
+    Task<PaymentDto> CreateAsync(CreatePaymentDto dto);
+    Task<PaymentDto> UpdateStatusAsync(UpdatePaymentDto dto);
+    Task<bool> DeleteAsync(int id);
+    Task<PaymentDto> ProcessPaymentAsync(int invoiceId, decimal amount, string paymentMethod);
 }
-
-public record PaymentDto(
-    int Id,
-    int InvoiceId,
-    decimal Amount,
-    string PaymentMethod,
-    string Status,
-    DateTime ProcessedAt);
-
-public record ProcessPaymentDto(
-    int InvoiceId,
-    decimal Amount,
-    string PaymentMethod);
