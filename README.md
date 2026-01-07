@@ -1,6 +1,6 @@
 # ThePit
 
-A .NET REST API with Swagger/OpenAPI documentation.
+A .NET 8 REST API with Swagger/OpenAPI documentation.
 
 ## Getting Started
 
@@ -10,7 +10,7 @@ A .NET REST API with Swagger/OpenAPI documentation.
 ### Running the API
 
 ```bash
-cd src/ThePit.Api
+cd src/ThePitApi
 dotnet run
 ```
 
@@ -22,9 +22,36 @@ When running in Development mode, Swagger UI is available at the root URL (`/`).
 
 The OpenAPI specification is available at `/swagger/v1/swagger.json`.
 
+## Project Structure
+
+```
+ThePitApi/
+├── Controllers/
+│   └── DefaultController.cs    # Main API controller
+├── Models/
+│   └── ContactModel.cs         # Contact request model
+└── Program.cs                  # Application entry point
+```
+
 ## API Endpoints
 
-- `GET /api/weatherforecast` - Get weather forecast for the next 5 days
+### DefaultController (`/default`)
+
+| Method | Endpoint | Description | Request Body |
+|--------|----------|-------------|--------------|
+| GET | `/default` | Returns a simple greeting | - |
+| PUT | `/default` | Echoes input with confirmation | `string` |
+| POST | `/default` | Accepts contact information | `ContactModel` |
+
+### Models
+
+**ContactModel**
+```json
+{
+  "name": "string",
+  "email": "string"
+}
+```
 
 ## License
 
