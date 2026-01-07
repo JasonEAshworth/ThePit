@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ThePitApi\ThePitApi.csproj" />
+    <ProjectReference Include="..\ThePit.DataAccess\ThePit.DataAccess.csproj" />
   </ItemGroup>
 
 </Project>
