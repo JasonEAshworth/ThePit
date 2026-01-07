@@ -1,7 +1,11 @@
 # ThePit
 
-A project by Jason Ashworth.
+A .NET project.
+
+## Getting Started
+
+*Coming soon*
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
