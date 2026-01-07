@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ThePit.DataAccess\ThePit.DataAccess.csproj" />
+    <ProjectReference Include="..\ThePit.Services\ThePit.Services.csproj" />
   </ItemGroup>
 
 </Project>
