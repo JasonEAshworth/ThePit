@@ -5,6 +5,7 @@ public class Invoice
     public int Id { get; set; }
     public string InvoiceNumber { get; set; } = string.Empty;
     public decimal Amount { get; set; }
+    public DateTime DueDate { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? PaidAt { get; set; }
     public string Status { get; set; } = "Pending";
