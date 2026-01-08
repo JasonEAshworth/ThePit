@@ -38,17 +38,35 @@ bd show <hooked-bead-id>
 # 2. Do the work
 # ... implement the task ...
 
-# 3. Commit and push
+# 3. Commit and push to your branch
 git add .
 git commit -m "Description of changes"
 git push -u origin HEAD
 
-# 4. Close the bead
+# 4. Create a GitHub Pull Request (REQUIRED)
+gh pr create --base main --head $(git branch --show-current) --title "Title" --body "Description"
+
+# 5. Close the bead
 bd close <bead-id> --reason="Completed: <summary>"
 
-# 5. Notify completion
-gt mail send witness/ -s "COMPLETE: <bead-id>" -m "Work pushed to branch"
+# 6. Notify completion
+gt mail send witness/ -s "COMPLETE: <bead-id>" -m "PR created for branch"
 ```
+
+---
+
+## CRITICAL: Pull Request Policy
+
+**Polecats MUST create GitHub PRs** - direct pushes to main are blocked.
+
+**Polecats MUST NOT merge PRs** - only humans can approve and merge.
+
+After creating a PR:
+1. Close your bead
+2. Notify witness
+3. Wait for human review and merge
+
+**NEVER run `gh pr merge`** - this is strictly prohibited for polecats.
 
 ---
 
@@ -66,6 +84,8 @@ gt mail send witness/ -s "COMPLETE: <bead-id>" -m "Work pushed to branch"
 - Expand scope beyond the assigned task
 - Leave uncommitted changes
 - Forget to push before ending
+- **Merge pull requests** - only humans can merge
+- Push directly to main branch
 
 ---
 
