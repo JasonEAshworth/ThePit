@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { invoiceApi } from '$lib/api';
+	import { LoadingSpinner, ErrorAlert } from '$lib/components';
 	import type { Invoice, InvoiceStatus } from '$lib/types';
 
 	let invoices = $state<Invoice[]>([]);
@@ -138,14 +139,9 @@
 	</div>
 
 	{#if loading}
-		<div class="flex items-center justify-center py-12">
-			<div class="text-gray-500">Loading invoices...</div>
-		</div>
+		<LoadingSpinner message="Loading invoices..." />
 	{:else if error}
-		<div class="rounded-md bg-red-50 p-4 text-red-700">
-			{error}
-			<button onclick={loadInvoices} class="ml-4 underline">Retry</button>
-		</div>
+		<ErrorAlert message={error} onRetry={loadInvoices} />
 	{:else if filteredInvoices.length === 0}
 		<div class="py-12 text-center text-gray-500">
 			{invoices.length === 0 ? 'No invoices found' : 'No invoices match your filters'}

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { invoiceApi, paymentApi } from '$lib/api';
+	import { LoadingSpinner, ErrorAlert } from '$lib/components';
 	import type { Invoice, Payment } from '$lib/types';
 
 	let invoices = $state<Invoice[]>([]);
@@ -111,14 +112,9 @@
 		</div>
 
 		{#if loading}
-			<div class="flex items-center justify-center py-12">
-				<div class="text-gray-500">Loading dashboard...</div>
-			</div>
+			<LoadingSpinner message="Loading dashboard..." />
 		{:else if error}
-			<div class="rounded-md bg-red-50 p-4 text-red-700">
-				{error}
-				<button onclick={loadData} class="ml-4 underline">Retry</button>
-			</div>
+			<ErrorAlert message={error} onRetry={loadData} />
 		{:else}
 			<!-- Statistics Cards -->
 			<div class="mb-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">

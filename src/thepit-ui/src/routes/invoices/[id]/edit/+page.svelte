@@ -3,7 +3,7 @@
 	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
 	import { invoiceApi } from '$lib/api';
-	import { InvoiceForm } from '$lib/components';
+	import { InvoiceForm, LoadingSpinner, ErrorAlert } from '$lib/components';
 	import type { Invoice, UpdateInvoiceDto } from '$lib/types';
 
 	let invoice = $state<Invoice | null>(null);
@@ -52,19 +52,12 @@
 	</div>
 
 	{#if loading}
-		<div class="flex items-center justify-center py-12">
-			<div class="text-gray-500">Loading invoice...</div>
-		</div>
+		<LoadingSpinner message="Loading invoice..." />
 	{:else if error}
-		<div class="rounded-md bg-red-50 p-4 text-red-700">
-			{error}
-			<button onclick={loadInvoice} class="ml-4 underline">Retry</button>
-		</div>
+		<ErrorAlert message={error} onRetry={loadInvoice} />
 	{:else if invoice}
 		{#if submitError}
-			<div class="mb-4 rounded-md bg-red-50 p-4 text-red-700">
-				{submitError}
-			</div>
+			<ErrorAlert message={submitError} onDismiss={() => (submitError = null)} />
 		{/if}
 
 		<div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
