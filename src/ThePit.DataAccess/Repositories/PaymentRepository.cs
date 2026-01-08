@@ -46,6 +46,19 @@ public class PaymentRepository : IPaymentRepository
             .ToListAsync();
     }
 
+    public async Task<IEnumerable<Payment>> GetFilteredAsync(string? status = null, string? paymentMethod = null)
+    {
+        var query = _context.Payments.AsNoTracking();
+
+        if (!string.IsNullOrWhiteSpace(status))
+            query = query.Where(p => p.Status == status);
+
+        if (!string.IsNullOrWhiteSpace(paymentMethod))
+            query = query.Where(p => p.PaymentMethod == paymentMethod);
+
+        return await query.OrderByDescending(p => p.PaymentDate).ToListAsync();
+    }
+
     public async Task<Payment> CreateAsync(Payment payment)
     {
         if (payment == null)
