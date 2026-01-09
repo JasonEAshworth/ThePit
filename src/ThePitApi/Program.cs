@@ -4,8 +4,12 @@ using ThePit.DataAccess.Interfaces;
 using ThePit.DataAccess.Repositories;
 using ThePit.Services.Interfaces;
 using ThePit.Services.Services;
+using ThePit.Services.Queries;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add MediatR
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetInvoiceByIdQuery>());
 
 // Add services to the container
 builder.Services.AddDbContext<ThePitDbContext>(options =>
