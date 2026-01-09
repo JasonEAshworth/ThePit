@@ -87,17 +87,17 @@
 		switch (status) {
 			case 'Paid':
 			case 'Completed':
-				return 'bg-green-100 text-green-800';
+				return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400';
 			case 'Pending':
-				return 'bg-yellow-100 text-yellow-800';
+				return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400';
 			case 'Overdue':
 			case 'Failed':
-				return 'bg-red-100 text-red-800';
+				return 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400';
 			case 'Cancelled':
 			case 'Refunded':
-				return 'bg-gray-100 text-gray-800';
+				return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
 			default:
-				return 'bg-gray-100 text-gray-800';
+				return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
 		}
 	}
 
@@ -107,15 +107,15 @@
 
 <div class="p-6">
 	<div class="mb-6">
-		<a href="/invoices" class="text-blue-600 hover:underline">&larr; Back to Invoices</a>
+		<a href="/invoices" class="text-pit-500 hover:underline">&larr; Back to Invoices</a>
 	</div>
 
 	{#if loading}
 		<div class="flex items-center justify-center py-12">
-			<div class="text-gray-500">Loading invoice...</div>
+			<div class="text-gray-500 dark:text-gray-400">Loading invoice...</div>
 		</div>
 	{:else if error}
-		<div class="rounded-md bg-red-50 p-4 text-red-700">
+		<div class="rounded-md bg-red-50 p-4 text-red-700 dark:bg-red-900/20 dark:text-red-400">
 			{error}
 			<button onclick={loadData} class="ml-4 underline">Retry</button>
 		</div>
@@ -123,7 +123,7 @@
 		<!-- Invoice Header -->
 		<div class="mb-6 flex items-start justify-between">
 			<div>
-				<h1 class="text-2xl font-bold text-gray-900">Invoice {invoice.invoiceNumber}</h1>
+				<h1 class="text-2xl font-bold text-gray-900 dark:text-white">Invoice {invoice.invoiceNumber}</h1>
 				<span
 					class="mt-2 inline-flex rounded-full px-3 py-1 text-sm font-semibold {getStatusClass(invoice.status)}"
 				>
@@ -133,7 +133,7 @@
 			<div class="flex gap-2">
 				<a
 					href="/invoices/{invoice.id}/edit"
-					class="rounded-md bg-gray-100 px-4 py-2 text-gray-700 hover:bg-gray-200"
+					class="rounded-md bg-gray-100 px-4 py-2 text-gray-700 hover:bg-gray-200 dark:bg-slate-700 dark:text-gray-200 dark:hover:bg-slate-600"
 				>
 					Edit
 				</a>
@@ -157,38 +157,38 @@
 
 		<!-- Invoice Details -->
 		<div class="mb-8 grid gap-6 md:grid-cols-2">
-			<div class="rounded-lg border border-gray-200 bg-white p-6">
-				<h2 class="mb-4 text-lg font-semibold text-gray-900">Invoice Details</h2>
+			<div class="rounded-lg border border-gray-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-800">
+				<h2 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Invoice Details</h2>
 				<dl class="space-y-3">
 					<div class="flex justify-between">
-						<dt class="text-gray-500">Amount</dt>
-						<dd class="font-medium text-gray-900">{formatCurrency(invoice.amount)}</dd>
+						<dt class="text-gray-500 dark:text-gray-400">Amount</dt>
+						<dd class="font-medium text-gray-900 dark:text-white">{formatCurrency(invoice.amount)}</dd>
 					</div>
 					<div class="flex justify-between">
-						<dt class="text-gray-500">Due Date</dt>
-						<dd class="text-gray-900">{formatDate(invoice.dueDate)}</dd>
+						<dt class="text-gray-500 dark:text-gray-400">Due Date</dt>
+						<dd class="text-gray-900 dark:text-white">{formatDate(invoice.dueDate)}</dd>
 					</div>
 					<div class="flex justify-between">
-						<dt class="text-gray-500">Created</dt>
-						<dd class="text-gray-900">{formatDateTime(invoice.createdAt)}</dd>
+						<dt class="text-gray-500 dark:text-gray-400">Created</dt>
+						<dd class="text-gray-900 dark:text-white">{formatDateTime(invoice.createdAt)}</dd>
 					</div>
 				</dl>
 			</div>
 
-			<div class="rounded-lg border border-gray-200 bg-white p-6">
-				<h2 class="mb-4 text-lg font-semibold text-gray-900">Payment Summary</h2>
+			<div class="rounded-lg border border-gray-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-800">
+				<h2 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Payment Summary</h2>
 				<dl class="space-y-3">
 					<div class="flex justify-between">
-						<dt class="text-gray-500">Total Amount</dt>
-						<dd class="text-gray-900">{formatCurrency(invoice.amount)}</dd>
+						<dt class="text-gray-500 dark:text-gray-400">Total Amount</dt>
+						<dd class="text-gray-900 dark:text-white">{formatCurrency(invoice.amount)}</dd>
 					</div>
 					<div class="flex justify-between">
-						<dt class="text-gray-500">Paid</dt>
-						<dd class="text-green-600">{formatCurrency(totalPaid)}</dd>
+						<dt class="text-gray-500 dark:text-gray-400">Paid</dt>
+						<dd class="text-green-600 dark:text-green-400">{formatCurrency(totalPaid)}</dd>
 					</div>
-					<div class="flex justify-between border-t pt-3">
-						<dt class="font-medium text-gray-900">Remaining</dt>
-						<dd class="font-medium {remainingBalance > 0 ? 'text-red-600' : 'text-green-600'}">
+					<div class="flex justify-between border-t border-gray-200 pt-3 dark:border-slate-700">
+						<dt class="font-medium text-gray-900 dark:text-white">Remaining</dt>
+						<dd class="font-medium {remainingBalance > 0 ? 'text-red-600 dark:text-red-400' : 'text-green-600 dark:text-green-400'}">
 							{formatCurrency(remainingBalance)}
 						</dd>
 					</div>
@@ -197,45 +197,45 @@
 		</div>
 
 		<!-- Payments -->
-		<div class="rounded-lg border border-gray-200 bg-white p-6">
-			<h2 class="mb-4 text-lg font-semibold text-gray-900">Payments</h2>
+		<div class="rounded-lg border border-gray-200 bg-white p-6 dark:border-slate-700 dark:bg-slate-800">
+			<h2 class="mb-4 text-lg font-semibold text-gray-900 dark:text-white">Payments</h2>
 			{#if payments.length === 0}
-				<p class="text-gray-500">No payments recorded for this invoice.</p>
+				<p class="text-gray-500 dark:text-gray-400">No payments recorded for this invoice.</p>
 			{:else}
 				<div class="overflow-x-auto">
-					<table class="min-w-full divide-y divide-gray-200">
+					<table class="min-w-full divide-y divide-gray-200 dark:divide-slate-700">
 						<thead>
 							<tr>
-								<th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500">
+								<th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
 									Date
 								</th>
-								<th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500">
+								<th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
 									Amount
 								</th>
-								<th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500">
+								<th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
 									Method
 								</th>
-								<th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500">
+								<th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
 									Transaction ID
 								</th>
-								<th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500">
+								<th class="px-4 py-2 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
 									Status
 								</th>
 							</tr>
 						</thead>
-						<tbody class="divide-y divide-gray-200">
+						<tbody class="divide-y divide-gray-200 dark:divide-slate-700">
 							{#each payments as payment (payment.id)}
 								<tr>
-									<td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">
+									<td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900 dark:text-white">
 										{formatDateTime(payment.paymentDate)}
 									</td>
-									<td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900">
+									<td class="whitespace-nowrap px-4 py-2 text-sm text-gray-900 dark:text-white">
 										{formatCurrency(payment.amount)}
 									</td>
-									<td class="whitespace-nowrap px-4 py-2 text-sm text-gray-500">
+									<td class="whitespace-nowrap px-4 py-2 text-sm text-gray-500 dark:text-gray-400">
 										{payment.paymentMethod}
 									</td>
-									<td class="whitespace-nowrap px-4 py-2 text-sm text-gray-500">
+									<td class="whitespace-nowrap px-4 py-2 text-sm text-gray-500 dark:text-gray-400">
 										{payment.transactionId}
 									</td>
 									<td class="whitespace-nowrap px-4 py-2 text-sm">
@@ -258,11 +258,11 @@
 <!-- Payment Modal -->
 {#if showPaymentModal}
 	<div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-		<div class="w-full max-w-md rounded-lg bg-white p-6 shadow-xl">
-			<h2 class="mb-4 text-xl font-semibold">Process Payment</h2>
+		<div class="w-full max-w-md rounded-lg bg-white p-6 shadow-xl dark:bg-slate-800">
+			<h2 class="mb-4 text-xl font-semibold text-gray-900 dark:text-white">Process Payment</h2>
 
 			<div class="mb-4">
-				<label for="amount" class="mb-1 block text-sm font-medium text-gray-700">Amount</label>
+				<label for="amount" class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">Amount</label>
 				<input
 					id="amount"
 					type="number"
@@ -270,18 +270,18 @@
 					min="0.01"
 					max={remainingBalance}
 					bind:value={paymentAmount}
-					class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+					class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-pit-500 focus:outline-none dark:border-slate-600 dark:bg-slate-700 dark:text-white"
 				/>
 			</div>
 
 			<div class="mb-6">
-				<label for="method" class="mb-1 block text-sm font-medium text-gray-700">
+				<label for="method" class="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
 					Payment Method
 				</label>
 				<select
 					id="method"
 					bind:value={paymentMethod}
-					class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none"
+					class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-pit-500 focus:outline-none dark:border-slate-600 dark:bg-slate-700 dark:text-white"
 				>
 					<option>Credit Card</option>
 					<option>Debit Card</option>
@@ -294,7 +294,7 @@
 			<div class="flex justify-end gap-2">
 				<button
 					onclick={() => (showPaymentModal = false)}
-					class="rounded-md bg-gray-100 px-4 py-2 text-gray-700 hover:bg-gray-200"
+					class="rounded-md bg-gray-100 px-4 py-2 text-gray-700 hover:bg-gray-200 dark:bg-slate-700 dark:text-gray-200 dark:hover:bg-slate-600"
 				>
 					Cancel
 				</button>

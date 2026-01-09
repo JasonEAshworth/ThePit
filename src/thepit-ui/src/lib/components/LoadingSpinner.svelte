@@ -15,11 +15,11 @@
 
 <div class="flex flex-col items-center justify-center py-8">
 	<div
-		class="animate-spin rounded-full border-b-2 border-blue-600 {sizeClasses[size]}"
+		class="animate-spin rounded-full border-b-2 border-pit-500 {sizeClasses[size]}"
 		role="status"
 		aria-label="Loading"
 	></div>
 	{#if message}
-		<p class="mt-3 text-sm text-gray-500">{message}</p>
+		<p class="mt-3 text-sm text-gray-500 dark:text-gray-400">{message}</p>
 	{/if}
 </div>
