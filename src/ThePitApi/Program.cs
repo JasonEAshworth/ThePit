@@ -18,8 +18,12 @@ builder.Services.AddDbContext<ThePitDbContext>(options =>
 
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+
+// DEPRECATED: Old service layer - use CQRS handlers instead
+#pragma warning disable CS0618 // Type or member is obsolete
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
+#pragma warning restore CS0618
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -47,14 +51,6 @@ builder.Services.AddDbContext<ThePitDbContext>(options =>
         options.UseSqlServer(connectionString);
     }
 });
-
-// Register repositories (Scoped - one instance per request)
-builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
-builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
-
-// Register services (Scoped - one instance per request)
-builder.Services.AddScoped<IInvoiceService, InvoiceService>();
-builder.Services.AddScoped<IPaymentService, PaymentService>();
 
 var app = builder.Build();
 

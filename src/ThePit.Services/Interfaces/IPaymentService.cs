@@ -2,6 +2,7 @@ using ThePit.Services.DTOs;
 
 namespace ThePit.Services.Interfaces;
 
+[Obsolete("IPaymentService is deprecated. Use CQRS commands and queries instead.")]
 public interface IPaymentService
 {
     Task<PaymentDto?> GetByIdAsync(int id);

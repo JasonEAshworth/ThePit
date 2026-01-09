@@ -5,6 +5,7 @@ using ThePit.Services.Interfaces;
 
 namespace ThePit.Services.Services;
 
+[Obsolete("PaymentService is deprecated. Use CQRS commands and queries instead.")]
 public class PaymentService : IPaymentService
 {
     private readonly IPaymentRepository _paymentRepository;
