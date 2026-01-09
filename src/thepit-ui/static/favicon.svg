@@ -1,0 +1,22 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Favicon - Icon Only Version -->
+  <defs>
+    <linearGradient id="faviconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background Circle (optional, for better visibility) -->
+  <circle cx="32" cy="32" r="30" fill="#1a1d29"/>
+  
+  <!-- Outer Hexagon -->
+  <path d="M 32 8 L 48 17 L 48 35 L 32 44 L 16 35 L 16 17 Z" fill="url(#faviconGradient)" opacity="0.3"/>
+  
+  <!-- Middle Hexagon -->
+  <path d="M 32 14 L 44 21 L 44 35 L 32 42 L 20 35 L 20 21 Z" fill="url(#faviconGradient)" opacity="0.6"/>
+  
+  <!-- Inner Hexagon -->
+  <path d="M 32 20 L 40 25 L 40 35 L 32 40 L 24 35 L 24 25 Z" fill="url(#faviconGradient)"/>
+</svg>
+
