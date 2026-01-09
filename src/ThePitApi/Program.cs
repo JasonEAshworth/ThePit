@@ -8,6 +8,14 @@ using ThePit.Services.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container
+builder.Services.AddDbContext<ThePitDbContext>(options =>
+    options.UseInMemoryDatabase("ThePitDb"));
+
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<IInvoiceService, InvoiceService>();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>

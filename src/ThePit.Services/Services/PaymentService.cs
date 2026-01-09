@@ -49,6 +49,12 @@ public class PaymentService : IPaymentService
         return payments.Select(MapToDto);
     }
 
+    public async Task<IEnumerable<PaymentDto>> GetFilteredAsync(string? status = null, string? paymentMethod = null)
+    {
+        var payments = await _paymentRepository.GetFilteredAsync(status, paymentMethod);
+        return payments.Select(MapToDto);
+    }
+
     public async Task<PaymentDto> CreateAsync(CreatePaymentDto dto)
     {
         ValidateCreateDto(dto);

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { invoiceApi } from '$lib/api';
+	import { LoadingSpinner, ErrorAlert } from '$lib/components';
 	import type { Invoice, InvoiceStatus } from '$lib/types';
 
 	let invoices = $state<Invoice[]>([]);
@@ -107,8 +108,14 @@
 </script>
 
 <div class="p-6">
-	<div class="mb-6">
+	<div class="mb-6 flex items-center justify-between">
 		<h1 class="text-2xl font-bold text-gray-900">Invoices</h1>
+		<a
+			href="/invoices/new"
+			class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+		>
+			Create Invoice
+		</a>
 	</div>
 
 	<!-- Filters -->
@@ -132,14 +139,9 @@
 	</div>
 
 	{#if loading}
-		<div class="flex items-center justify-center py-12">
-			<div class="text-gray-500">Loading invoices...</div>
-		</div>
+		<LoadingSpinner message="Loading invoices..." />
 	{:else if error}
-		<div class="rounded-md bg-red-50 p-4 text-red-700">
-			{error}
-			<button onclick={loadInvoices} class="ml-4 underline">Retry</button>
-		</div>
+		<ErrorAlert message={error} onRetry={loadInvoices} />
 	{:else if filteredInvoices.length === 0}
 		<div class="py-12 text-center text-gray-500">
 			{invoices.length === 0 ? 'No invoices found' : 'No invoices match your filters'}
@@ -179,6 +181,9 @@
 						>
 							Created {getSortIcon('createdAt')}
 						</th>
+						<th class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500">
+							Actions
+						</th>
 					</tr>
 				</thead>
 				<tbody class="divide-y divide-gray-200 bg-white">
@@ -204,6 +209,14 @@
 							</td>
 							<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
 								{formatDate(invoice.createdAt)}
+							</td>
+							<td class="whitespace-nowrap px-6 py-4 text-right text-sm">
+								<a
+									href="/invoices/{invoice.id}/edit"
+									class="text-blue-600 hover:text-blue-900 hover:underline"
+								>
+									Edit
+								</a>
 							</td>
 						</tr>
 					{/each}
