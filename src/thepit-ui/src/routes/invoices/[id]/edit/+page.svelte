@@ -4,14 +4,14 @@
 	import { onMount } from 'svelte';
 	import { invoiceApi } from '$lib/api';
 	import { InvoiceForm, LoadingSpinner, ErrorAlert } from '$lib/components';
-	import type { Invoice, UpdateInvoiceDto } from '$lib/types';
+	import type { Invoice, CreateInvoiceDto, UpdateInvoiceDto } from '$lib/types';
 
 	let invoice = $state<Invoice | null>(null);
 	let loading = $state(true);
 	let error = $state<string | null>(null);
 	let submitError = $state<string | null>(null);
 
-	const invoiceId = $derived(parseInt($page.params.id, 10));
+	const invoiceId = $derived(parseInt($page.params.id!, 10));
 
 	onMount(async () => {
 		await loadInvoice();
@@ -29,10 +29,10 @@
 		}
 	}
 
-	async function handleSubmit(data: UpdateInvoiceDto) {
+	async function handleSubmit(data: CreateInvoiceDto | UpdateInvoiceDto) {
 		submitError = null;
 		try {
-			await invoiceApi.update(invoiceId, data);
+			await invoiceApi.update(invoiceId, data as UpdateInvoiceDto);
 			goto('/invoices');
 		} catch (e) {
 			submitError = e instanceof Error ? e.message : 'Failed to update invoice';

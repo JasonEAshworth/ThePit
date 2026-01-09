@@ -2,14 +2,14 @@
 	import { goto } from '$app/navigation';
 	import { invoiceApi } from '$lib/api';
 	import { InvoiceForm, ErrorAlert } from '$lib/components';
-	import type { CreateInvoiceDto } from '$lib/types';
+	import type { CreateInvoiceDto, UpdateInvoiceDto } from '$lib/types';
 
 	let error = $state<string | null>(null);
 
-	async function handleSubmit(data: CreateInvoiceDto) {
+	async function handleSubmit(data: CreateInvoiceDto | UpdateInvoiceDto) {
 		error = null;
 		try {
-			await invoiceApi.create(data);
+			await invoiceApi.create(data as CreateInvoiceDto);
 			goto('/invoices');
 		} catch (e) {
 			error = e instanceof Error ? e.message : 'Failed to create invoice';

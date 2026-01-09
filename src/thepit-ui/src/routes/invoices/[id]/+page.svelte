@@ -17,7 +17,7 @@
 	let paymentMethod = $state('Credit Card');
 	let processingPayment = $state(false);
 
-	const invoiceId = $derived(Number($page.params.id));
+	const invoiceId = $derived(Number($page.params.id!));
 
 	onMount(async () => {
 		await loadData();
