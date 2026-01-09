@@ -1,3 +1,111 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  /* Background Colors */
+  --color-bg-primary: #1a1d29;
+  --color-bg-secondary: #2d3748;
+  --color-bg-hover: #374151;
+
+  /* Accent Colors */
+  --color-accent-primary: #3b82f6;
+  --color-accent-primary-hover: #60a5fa;
+  --color-accent-secondary: #06b6d4;
+
+  /* Text Colors */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #e5e7eb;
+  --color-text-disabled: #9ca3af;
+
+  /* Status Colors */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+}
+
+@layer base {
+  body {
+    @apply bg-pit-charcoal text-pit-text-primary;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold text-pit-text-primary;
+  }
+
+  a {
+    @apply text-pit-blue hover:text-pit-blue-light transition-colors;
+  }
+}
+
+@layer components {
+  /* Button Styles */
+  .btn-primary {
+    @apply bg-pit-blue hover:bg-pit-blue-light text-white font-medium py-2 px-4 rounded-lg transition-colors;
+  }
+
+  .btn-secondary {
+    @apply bg-pit-slate hover:bg-pit-slate-light text-white font-medium py-2 px-4 rounded-lg transition-colors;
+  }
+
+  .btn-success {
+    @apply bg-pit-success hover:bg-green-600 text-white font-medium py-2 px-4 rounded-lg transition-colors;
+  }
+
+  .btn-danger {
+    @apply bg-pit-error hover:bg-red-600 text-white font-medium py-2 px-4 rounded-lg transition-colors;
+  }
+
+  /* Card Styles */
+  .card {
+    @apply bg-pit-slate rounded-lg shadow-lg p-6;
+  }
+
+  .card-hover {
+    @apply bg-pit-slate hover:bg-pit-slate-light rounded-lg shadow-lg p-6 transition-colors cursor-pointer;
+  }
+
+  /* Input Styles */
+  .input {
+    @apply bg-pit-slate border border-gray-600 text-pit-text-primary rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-pit-blue;
+  }
+
+  /* Status Badge Styles */
+  .badge-success {
+    @apply bg-pit-success/20 text-pit-success px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  .badge-warning {
+    @apply bg-pit-warning/20 text-pit-warning px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  .badge-error {
+    @apply bg-pit-error/20 text-pit-error px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  .badge-info {
+    @apply bg-pit-cyan/20 text-pit-cyan px-3 py-1 rounded-full text-sm font-medium;
+  }
+
+  /* Table Styles */
+  .table {
+    @apply w-full text-left;
+  }
+
+  .table thead {
+    @apply bg-pit-slate-light;
+  }
+
+  .table th {
+    @apply px-4 py-3 text-pit-text-secondary font-semibold text-sm uppercase tracking-wider;
+  }
+
+  .table td {
+    @apply px-4 py-3 border-t border-gray-700;
+  }
+
+  .table tbody tr {
+    @apply hover:bg-pit-slate-light transition-colors;
+  }
+}
