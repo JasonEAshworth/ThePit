@@ -96,22 +96,22 @@
 	function getStatusClass(status: PaymentStatus): string {
 		switch (status) {
 			case 'Completed':
-				return 'bg-green-100 text-green-800';
+				return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400';
 			case 'Pending':
-				return 'bg-yellow-100 text-yellow-800';
+				return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400';
 			case 'Failed':
-				return 'bg-red-100 text-red-800';
+				return 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400';
 			case 'Refunded':
-				return 'bg-gray-100 text-gray-800';
+				return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
 			default:
-				return 'bg-gray-100 text-gray-800';
+				return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
 		}
 	}
 </script>
 
 <div class="p-6">
 	<div class="mb-6">
-		<h1 class="text-2xl font-bold text-gray-900">Payments</h1>
+		<h1 class="text-2xl font-bold text-gray-900 dark:text-white">Payments</h1>
 	</div>
 
 	<!-- Filters -->
@@ -120,12 +120,12 @@
 			type="text"
 			placeholder="Search by transaction ID..."
 			bind:value={searchQuery}
-			class="rounded-md border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+			class="rounded-md border border-gray-300 px-4 py-2 focus:border-pit-500 focus:outline-none focus:ring-1 focus:ring-pit-500 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder-gray-400"
 		/>
 
 		<select
 			bind:value={statusFilter}
-			class="rounded-md border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+			class="rounded-md border border-gray-300 px-4 py-2 focus:border-pit-500 focus:outline-none focus:ring-1 focus:ring-pit-500 dark:border-slate-600 dark:bg-slate-700 dark:text-white"
 		>
 			<option value="">All Statuses</option>
 			{#each statuses as status}
@@ -135,7 +135,7 @@
 
 		<select
 			bind:value={methodFilter}
-			class="rounded-md border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+			class="rounded-md border border-gray-300 px-4 py-2 focus:border-pit-500 focus:outline-none focus:ring-1 focus:ring-pit-500 dark:border-slate-600 dark:bg-slate-700 dark:text-white"
 		>
 			<option value="">All Methods</option>
 			{#each methods as method}
@@ -146,80 +146,80 @@
 
 	{#if loading}
 		<div class="flex items-center justify-center py-12">
-			<div class="text-gray-500">Loading payments...</div>
+			<div class="text-gray-500 dark:text-gray-400">Loading payments...</div>
 		</div>
 	{:else if error}
-		<div class="rounded-md bg-red-50 p-4 text-red-700">
+		<div class="rounded-md bg-red-50 p-4 text-red-700 dark:bg-red-900/20 dark:text-red-400">
 			{error}
 			<button onclick={loadPayments} class="ml-4 underline">Retry</button>
 		</div>
 	{:else if filteredPayments.length === 0}
-		<div class="py-12 text-center text-gray-500">
+		<div class="py-12 text-center text-gray-500 dark:text-gray-400">
 			{payments.length === 0 ? 'No payments found' : 'No payments match your filters'}
 		</div>
 	{:else}
-		<div class="overflow-x-auto rounded-lg border border-gray-200">
-			<table class="min-w-full divide-y divide-gray-200">
-				<thead class="bg-gray-50">
+		<div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-slate-700">
+			<table class="min-w-full divide-y divide-gray-200 dark:divide-slate-700">
+				<thead class="bg-gray-50 dark:bg-slate-800">
 					<tr>
 						<th
-							class="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100"
+							class="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-700"
 							onclick={() => toggleSort('transactionId')}
 						>
 							Transaction ID {getSortIcon('transactionId')}
 						</th>
 						<th
-							class="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100"
+							class="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-700"
 							onclick={() => toggleSort('invoiceId')}
 						>
 							Invoice {getSortIcon('invoiceId')}
 						</th>
 						<th
-							class="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100"
+							class="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-700"
 							onclick={() => toggleSort('amount')}
 						>
 							Amount {getSortIcon('amount')}
 						</th>
 						<th
-							class="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100"
+							class="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-700"
 							onclick={() => toggleSort('paymentDate')}
 						>
 							Date {getSortIcon('paymentDate')}
 						</th>
 						<th
-							class="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100"
+							class="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-700"
 							onclick={() => toggleSort('paymentMethod')}
 						>
 							Method {getSortIcon('paymentMethod')}
 						</th>
 						<th
-							class="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100"
+							class="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-700"
 							onclick={() => toggleSort('status')}
 						>
 							Status {getSortIcon('status')}
 						</th>
 					</tr>
 				</thead>
-				<tbody class="divide-y divide-gray-200 bg-white">
+				<tbody class="divide-y divide-gray-200 bg-white dark:divide-slate-700 dark:bg-slate-800">
 					{#each filteredPayments as payment (payment.id)}
-						<tr class="hover:bg-gray-50">
-							<td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
-								<a href="/payments/{payment.id}" class="text-blue-600 hover:underline">
+						<tr class="hover:bg-gray-50 dark:hover:bg-slate-700">
+							<td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
+								<a href="/payments/{payment.id}" class="text-pit-500 hover:underline">
 									{payment.transactionId}
 								</a>
 							</td>
-							<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-								<a href="/invoices/{payment.invoiceId}" class="text-blue-600 hover:underline">
+							<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
+								<a href="/invoices/{payment.invoiceId}" class="text-pit-500 hover:underline">
 									#{payment.invoiceId}
 								</a>
 							</td>
-							<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+							<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
 								{formatCurrency(payment.amount)}
 							</td>
-							<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+							<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
 								{formatDateTime(payment.paymentDate)}
 							</td>
-							<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+							<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
 								{payment.paymentMethod}
 							</td>
 							<td class="whitespace-nowrap px-6 py-4 text-sm">
@@ -235,7 +235,7 @@
 			</table>
 		</div>
 
-		<div class="mt-4 text-sm text-gray-500">
+		<div class="mt-4 text-sm text-gray-500 dark:text-gray-400">
 			Showing {filteredPayments.length} of {payments.length} payments
 		</div>
 	{/if}
