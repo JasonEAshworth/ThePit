@@ -20,15 +20,19 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// Configure DbContext with InMemory provider for development
+// Configure DbContext
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ThePitDbContext>(options =>
 {
-    if (builder.Environment.IsDevelopment())
+    if (string.IsNullOrEmpty(connectionString))
     {
+        // Fallback to InMemory for testing
         options.UseInMemoryDatabase("ThePitDb");
     }
-    // Production configuration would use a real database connection string
-    // options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    else
+    {
+        options.UseSqlServer(connectionString);
+    }
 });
 
 // Register repositories (Scoped - one instance per request)
