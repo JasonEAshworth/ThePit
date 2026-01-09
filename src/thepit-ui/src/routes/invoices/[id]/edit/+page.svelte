@@ -4,14 +4,14 @@
 	import { onMount } from 'svelte';
 	import { invoiceApi } from '$lib/api';
 	import { InvoiceForm, LoadingSpinner, ErrorAlert } from '$lib/components';
-	import type { Invoice, UpdateInvoiceDto } from '$lib/types';
+	import type { Invoice, CreateInvoiceDto, UpdateInvoiceDto } from '$lib/types';
 
 	let invoice = $state<Invoice | null>(null);
 	let loading = $state(true);
 	let error = $state<string | null>(null);
 	let submitError = $state<string | null>(null);
 
-	const invoiceId = $derived(parseInt($page.params.id, 10));
+	const invoiceId = $derived(parseInt($page.params.id!, 10));
 
 	onMount(async () => {
 		await loadInvoice();
@@ -29,10 +29,10 @@
 		}
 	}
 
-	async function handleSubmit(data: UpdateInvoiceDto) {
+	async function handleSubmit(data: CreateInvoiceDto | UpdateInvoiceDto) {
 		submitError = null;
 		try {
-			await invoiceApi.update(invoiceId, data);
+			await invoiceApi.update(invoiceId, data as UpdateInvoiceDto);
 			goto('/invoices');
 		} catch (e) {
 			submitError = e instanceof Error ? e.message : 'Failed to update invoice';
@@ -47,8 +47,8 @@
 
 <div class="mx-auto max-w-2xl p-6">
 	<div class="mb-6">
-		<a href="/invoices" class="text-sm text-blue-600 hover:underline">&larr; Back to Invoices</a>
-		<h1 class="mt-2 text-2xl font-bold text-gray-900">Edit Invoice</h1>
+		<a href="/invoices" class="text-sm text-pit-500 hover:underline">&larr; Back to Invoices</a>
+		<h1 class="mt-2 text-2xl font-bold text-gray-900 dark:text-white">Edit Invoice</h1>
 	</div>
 
 	{#if loading}
@@ -60,7 +60,7 @@
 			<ErrorAlert message={submitError} onDismiss={() => (submitError = null)} />
 		{/if}
 
-		<div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+		<div class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-800">
 			<InvoiceForm {invoice} onSubmit={handleSubmit} onCancel={handleCancel} isEdit={true} />
 		</div>
 	{/if}

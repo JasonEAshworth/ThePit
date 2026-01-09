@@ -94,25 +94,25 @@
 	function getStatusClass(status: InvoiceStatus): string {
 		switch (status) {
 			case 'Paid':
-				return 'bg-green-100 text-green-800';
+				return 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400';
 			case 'Pending':
-				return 'bg-yellow-100 text-yellow-800';
+				return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400';
 			case 'Overdue':
-				return 'bg-red-100 text-red-800';
+				return 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400';
 			case 'Cancelled':
-				return 'bg-gray-100 text-gray-800';
+				return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
 			default:
-				return 'bg-gray-100 text-gray-800';
+				return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300';
 		}
 	}
 </script>
 
 <div class="p-6">
 	<div class="mb-6 flex items-center justify-between">
-		<h1 class="text-2xl font-bold text-gray-900">Invoices</h1>
+		<h1 class="text-2xl font-bold text-gray-900 dark:text-white">Invoices</h1>
 		<a
 			href="/invoices/new"
-			class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+			class="rounded-md bg-pit-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-pit-600 focus:outline-none focus:ring-2 focus:ring-pit-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900"
 		>
 			Create Invoice
 		</a>
@@ -124,12 +124,12 @@
 			type="text"
 			placeholder="Search invoices..."
 			bind:value={searchQuery}
-			class="rounded-md border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+			class="rounded-md border border-gray-300 px-4 py-2 focus:border-pit-500 focus:outline-none focus:ring-1 focus:ring-pit-500 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder-gray-400"
 		/>
 
 		<select
 			bind:value={statusFilter}
-			class="rounded-md border border-gray-300 px-4 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+			class="rounded-md border border-gray-300 px-4 py-2 focus:border-pit-500 focus:outline-none focus:ring-1 focus:ring-pit-500 dark:border-slate-600 dark:bg-slate-700 dark:text-white"
 		>
 			<option value="">All Statuses</option>
 			{#each statuses as status}
@@ -143,61 +143,61 @@
 	{:else if error}
 		<ErrorAlert message={error} onRetry={loadInvoices} />
 	{:else if filteredInvoices.length === 0}
-		<div class="py-12 text-center text-gray-500">
+		<div class="py-12 text-center text-gray-500 dark:text-gray-400">
 			{invoices.length === 0 ? 'No invoices found' : 'No invoices match your filters'}
 		</div>
 	{:else}
-		<div class="overflow-x-auto rounded-lg border border-gray-200">
-			<table class="min-w-full divide-y divide-gray-200">
-				<thead class="bg-gray-50">
+		<div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-slate-700">
+			<table class="min-w-full divide-y divide-gray-200 dark:divide-slate-700">
+				<thead class="bg-gray-50 dark:bg-slate-800">
 					<tr>
 						<th
-							class="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100"
+							class="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-700"
 							onclick={() => toggleSort('invoiceNumber')}
 						>
 							Invoice # {getSortIcon('invoiceNumber')}
 						</th>
 						<th
-							class="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100"
+							class="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-700"
 							onclick={() => toggleSort('amount')}
 						>
 							Amount {getSortIcon('amount')}
 						</th>
 						<th
-							class="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100"
+							class="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-700"
 							onclick={() => toggleSort('dueDate')}
 						>
 							Due Date {getSortIcon('dueDate')}
 						</th>
 						<th
-							class="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100"
+							class="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-700"
 							onclick={() => toggleSort('status')}
 						>
 							Status {getSortIcon('status')}
 						</th>
 						<th
-							class="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100"
+							class="cursor-pointer px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-slate-700"
 							onclick={() => toggleSort('createdAt')}
 						>
 							Created {getSortIcon('createdAt')}
 						</th>
-						<th class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500">
+						<th class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">
 							Actions
 						</th>
 					</tr>
 				</thead>
-				<tbody class="divide-y divide-gray-200 bg-white">
+				<tbody class="divide-y divide-gray-200 bg-white dark:divide-slate-700 dark:bg-slate-800">
 					{#each filteredInvoices as invoice (invoice.id)}
-						<tr class="hover:bg-gray-50">
-							<td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
-								<a href="/invoices/{invoice.id}" class="text-blue-600 hover:underline">
+						<tr class="hover:bg-gray-50 dark:hover:bg-slate-700">
+							<td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:text-white">
+								<a href="/invoices/{invoice.id}" class="text-pit-500 hover:underline">
 									{invoice.invoiceNumber}
 								</a>
 							</td>
-							<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+							<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
 								{formatCurrency(invoice.amount)}
 							</td>
-							<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+							<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
 								{formatDate(invoice.dueDate)}
 							</td>
 							<td class="whitespace-nowrap px-6 py-4 text-sm">
@@ -207,13 +207,13 @@
 									{invoice.status}
 								</span>
 							</td>
-							<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+							<td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500 dark:text-gray-400">
 								{formatDate(invoice.createdAt)}
 							</td>
 							<td class="whitespace-nowrap px-6 py-4 text-right text-sm">
 								<a
 									href="/invoices/{invoice.id}/edit"
-									class="text-blue-600 hover:text-blue-900 hover:underline"
+									class="text-pit-500 hover:text-pit-600 hover:underline"
 								>
 									Edit
 								</a>
@@ -224,7 +224,7 @@
 			</table>
 		</div>
 
-		<div class="mt-4 text-sm text-gray-500">
+		<div class="mt-4 text-sm text-gray-500 dark:text-gray-400">
 			Showing {filteredInvoices.length} of {invoices.length} invoices
 		</div>
 	{/if}
