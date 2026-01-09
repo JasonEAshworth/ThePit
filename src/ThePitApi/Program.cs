@@ -3,6 +3,7 @@ using ThePit.DataAccess.Data;
 using ThePit.DataAccess.Interfaces;
 using ThePit.DataAccess.Repositories;
 using ThePit.Services.Interfaces;
+using ThePit.Services.Queries.Payments;
 using ThePit.Services.Services;
 using ThePit.Services.Queries;
 
@@ -19,6 +20,9 @@ builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
+
+// Register MediatR
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<GetPaymentByIdQuery>());
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
