@@ -8,7 +8,7 @@
 	let { message, onRetry, onDismiss }: Props = $props();
 </script>
 
-<div class="rounded-md bg-red-50 p-4" role="alert">
+<div class="rounded-md bg-red-50 p-4 dark:bg-red-900/20" role="alert">
 	<div class="flex">
 		<div class="flex-shrink-0">
 			<svg class="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -20,14 +20,14 @@
 			</svg>
 		</div>
 		<div class="ml-3 flex-1">
-			<p class="text-sm text-red-700">{message}</p>
+			<p class="text-sm text-red-700 dark:text-red-400">{message}</p>
 		</div>
 		<div class="ml-3 flex gap-2">
 			{#if onRetry}
 				<button
 					type="button"
 					onclick={onRetry}
-					class="text-sm font-medium text-red-700 underline hover:text-red-600"
+					class="text-sm font-medium text-red-700 underline hover:text-red-600 dark:text-red-400 dark:hover:text-red-300"
 				>
 					Retry
 				</button>
