@@ -1,10 +1,10 @@
-import { PUBLIC_API_BASE_URL } from '$env/static/public';
+import { PUBLIC_API_BASE_URL } from '$env/dynamic/public';
 import type { ApiError } from '$lib/types';
 
 export class ApiClient {
 	private baseUrl: string;
 
-	constructor(baseUrl: string = PUBLIC_API_BASE_URL) {
+	constructor(baseUrl: string = PUBLIC_API_BASE_URL ?? '') {
 		this.baseUrl = baseUrl.replace(/\/$/, '');
 	}
 
