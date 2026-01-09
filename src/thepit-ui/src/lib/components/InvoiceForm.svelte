@@ -68,26 +68,27 @@
 
 <form onsubmit={handleSubmit} class="space-y-6">
 	<div>
-		<label for="invoiceNumber" class="block text-sm font-medium text-gray-700">
+		<label for="invoiceNumber" class="block text-sm font-medium text-gray-700 dark:text-gray-300">
 			Invoice Number
 		</label>
 		<input
 			type="text"
 			id="invoiceNumber"
 			bind:value={invoiceNumber}
-			class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+			class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-pit-500 focus:outline-none focus:ring-1 focus:ring-pit-500 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder-gray-400"
 			class:border-red-500={errors.invoiceNumber}
+			class:dark:border-red-500={errors.invoiceNumber}
 			placeholder="INV-001"
 		/>
 		{#if errors.invoiceNumber}
-			<p class="mt-1 text-sm text-red-600">{errors.invoiceNumber}</p>
+			<p class="mt-1 text-sm text-red-600 dark:text-red-400">{errors.invoiceNumber}</p>
 		{/if}
 	</div>
 
 	<div>
-		<label for="amount" class="block text-sm font-medium text-gray-700">Amount</label>
+		<label for="amount" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Amount</label>
 		<div class="relative mt-1">
-			<span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+			<span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500 dark:text-gray-400">
 				$
 			</span>
 			<input
@@ -96,37 +97,39 @@
 				bind:value={amount}
 				step="0.01"
 				min="0"
-				class="block w-full rounded-md border border-gray-300 py-2 pl-7 pr-3 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+				class="block w-full rounded-md border border-gray-300 py-2 pl-7 pr-3 shadow-sm focus:border-pit-500 focus:outline-none focus:ring-1 focus:ring-pit-500 dark:border-slate-600 dark:bg-slate-700 dark:text-white dark:placeholder-gray-400"
 				class:border-red-500={errors.amount}
+				class:dark:border-red-500={errors.amount}
 				placeholder="0.00"
 			/>
 		</div>
 		{#if errors.amount}
-			<p class="mt-1 text-sm text-red-600">{errors.amount}</p>
+			<p class="mt-1 text-sm text-red-600 dark:text-red-400">{errors.amount}</p>
 		{/if}
 	</div>
 
 	<div>
-		<label for="dueDate" class="block text-sm font-medium text-gray-700">Due Date</label>
+		<label for="dueDate" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Due Date</label>
 		<input
 			type="date"
 			id="dueDate"
 			bind:value={dueDate}
-			class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+			class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-pit-500 focus:outline-none focus:ring-1 focus:ring-pit-500 dark:border-slate-600 dark:bg-slate-700 dark:text-white"
 			class:border-red-500={errors.dueDate}
+			class:dark:border-red-500={errors.dueDate}
 		/>
 		{#if errors.dueDate}
-			<p class="mt-1 text-sm text-red-600">{errors.dueDate}</p>
+			<p class="mt-1 text-sm text-red-600 dark:text-red-400">{errors.dueDate}</p>
 		{/if}
 	</div>
 
 	{#if isEdit}
 		<div>
-			<label for="status" class="block text-sm font-medium text-gray-700">Status</label>
+			<label for="status" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Status</label>
 			<select
 				id="status"
 				bind:value={status}
-				class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+				class="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-pit-500 focus:outline-none focus:ring-1 focus:ring-pit-500 dark:border-slate-600 dark:bg-slate-700 dark:text-white"
 			>
 				{#each statuses as s}
 					<option value={s}>{s}</option>
@@ -139,14 +142,14 @@
 		<button
 			type="button"
 			onclick={onCancel}
-			class="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+			class="rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-pit-500 focus:ring-offset-2 dark:border-slate-600 dark:bg-slate-700 dark:text-gray-200 dark:hover:bg-slate-600 dark:focus:ring-offset-slate-900"
 		>
 			Cancel
 		</button>
 		<button
 			type="submit"
 			disabled={submitting}
-			class="rounded-md bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50"
+			class="rounded-md bg-pit-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-pit-600 focus:outline-none focus:ring-2 focus:ring-pit-500 focus:ring-offset-2 disabled:opacity-50 dark:focus:ring-offset-slate-900"
 		>
 			{submitting ? 'Saving...' : isEdit ? 'Update Invoice' : 'Create Invoice'}
 		</button>
