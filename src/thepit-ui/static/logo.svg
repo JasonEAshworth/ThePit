@@ -1,0 +1,23 @@
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Geometric Pit Symbol - Three Hexagons with Gradient -->
+  <defs>
+    <linearGradient id="pitGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06b6d4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Outer Hexagon -->
+  <path d="M 20 10 L 30 5 L 40 10 L 40 20 L 30 25 L 20 20 Z" fill="url(#pitGradient)" opacity="0.3"/>
+  
+  <!-- Middle Hexagon -->
+  <path d="M 23 13 L 30 9 L 37 13 L 37 19 L 30 23 L 23 19 Z" fill="url(#pitGradient)" opacity="0.6"/>
+  
+  <!-- Inner Hexagon -->
+  <path d="M 26 16 L 30 14 L 34 16 L 34 20 L 30 22 L 26 20 Z" fill="url(#pitGradient)"/>
+  
+  <!-- THE PIT Text -->
+  <text x="55" y="25" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#e5e7eb" letter-spacing="2">THE</text>
+  <text x="55" y="45" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#ffffff" letter-spacing="1">PIT</text>
+</svg>
+
