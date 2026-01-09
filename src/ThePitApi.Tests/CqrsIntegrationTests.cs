@@ -5,7 +5,7 @@ using ThePit.DataAccess.Data;
 using ThePit.DataAccess.Entities;
 using ThePit.DataAccess.Interfaces;
 using ThePit.DataAccess.Repositories;
-using ThePit.Services.Commands.Invoices;
+using ThePit.Services.Commands.Invoice;
 using ThePit.Services.Commands.Payments;
 using ThePit.Services.Queries;
 using ThePit.Services.Queries.Payments;
