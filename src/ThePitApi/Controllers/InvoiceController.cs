@@ -70,8 +70,7 @@ public class InvoiceController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {
-        var command = new DeleteInvoiceCommand(id);
-        var deleted = await _mediator.Send(command, cancellationToken);
+        var deleted = await _mediator.Send(new DeleteInvoiceCommand(id), cancellationToken);
         if (!deleted)
             return NotFound();
 
