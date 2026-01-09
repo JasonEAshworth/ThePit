@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using ThePit.DataAccess.Data;
-using ThePit.DataAccess.Entities;
 using ThePit.Services.DTOs;
 using ThePit.Services.Interfaces;
 using ThePitApi.Controllers;
@@ -12,16 +11,16 @@ using Xunit;
 
 namespace ThePitApi.Tests;
 
-public class ControllerCqrsIntegrationTests : IClassFixture<WebApplicationFactory<Program>>, IDisposable
+public class ControllerCqrsIntegrationTests : IDisposable
 {
     private readonly WebApplicationFactory<Program> _factory;
     private readonly HttpClient _client;
-    private readonly IServiceScope _scope;
-    private readonly ThePitDbContext _context;
+    private readonly string _dbName;
 
-    public ControllerCqrsIntegrationTests(WebApplicationFactory<Program> factory)
+    public ControllerCqrsIntegrationTests()
     {
-        _factory = factory.WithWebHostBuilder(builder =>
+        _dbName = "TestDb_" + Guid.NewGuid().ToString();
+        _factory = new WebApplicationFactory<Program>().WithWebHostBuilder(builder =>
         {
             builder.ConfigureServices(services =>
             {
@@ -32,22 +31,19 @@ public class ControllerCqrsIntegrationTests : IClassFixture<WebApplicationFactor
                 foreach (var descriptor in descriptors)
                     services.Remove(descriptor);
 
-                // Add in-memory database with unique name per test class
+                // Add in-memory database with unique name per test instance
                 services.AddDbContext<ThePitDbContext>(options =>
-                    options.UseInMemoryDatabase("TestDb_" + Guid.NewGuid().ToString()));
+                    options.UseInMemoryDatabase(_dbName));
             });
         });
 
         _client = _factory.CreateClient();
-        // Get scope from the CONFIGURED factory (not the original)
-        _scope = _factory.Services.CreateScope();
-        _context = _scope.ServiceProvider.GetRequiredService<ThePitDbContext>();
     }
 
     public void Dispose()
     {
-        _scope.Dispose();
         _client.Dispose();
+        _factory.Dispose();
     }
 
     #region InvoiceController Tests
@@ -55,7 +51,7 @@ public class ControllerCqrsIntegrationTests : IClassFixture<WebApplicationFactor
     [Fact]
     public async Task InvoiceController_GetAll_ReturnsOkWithInvoices()
     {
-        // Arrange - use the client to create data via POST instead of direct DB access
+        // Arrange - use the client to create data via POST
         var createDto = new CreateInvoiceDto("INV-HTTP-001", 100m, DateTime.UtcNow.AddDays(30));
         await _client.PostAsJsonAsync("/api/invoice", createDto);
 
