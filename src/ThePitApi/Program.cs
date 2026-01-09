@@ -51,6 +51,9 @@ builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 
+// Register MediatR handlers from ThePit.Services assembly
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ThePit.Services.Commands.Invoices.CreateInvoiceCommand).Assembly));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline
