@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ThePit.Services.Commands.Invoice;
 using ThePit.Services.Interfaces;
+using ThePit.Services.Queries;
 
 namespace ThePitApi.Controllers;
 
@@ -9,26 +10,24 @@ namespace ThePitApi.Controllers;
 [Route("api/[controller]")]
 public class InvoiceController : ControllerBase
 {
-    private readonly IInvoiceService _invoiceService;
     private readonly IMediator _mediator;
 
-    public InvoiceController(IInvoiceService invoiceService, IMediator mediator)
+    public InvoiceController(IMediator mediator)
     {
-        _invoiceService = invoiceService;
         _mediator = mediator;
     }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<InvoiceDto>>> GetAll(CancellationToken cancellationToken)
     {
-        var invoices = await _invoiceService.GetAllAsync(cancellationToken);
+        var invoices = await _mediator.Send(new GetAllInvoicesQuery(), cancellationToken);
         return Ok(invoices);
     }
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<InvoiceDto>> GetById(int id, CancellationToken cancellationToken)
     {
-        var invoice = await _invoiceService.GetByIdAsync(id, cancellationToken);
+        var invoice = await _mediator.Send(new GetInvoiceByIdQuery(id), cancellationToken);
         if (invoice is null)
             return NotFound();
 
