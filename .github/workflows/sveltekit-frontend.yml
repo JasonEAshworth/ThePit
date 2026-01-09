@@ -1,0 +1,39 @@
+name: SvelteKit Frontend
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - 'src/thepit-ui/**'
+      - '.github/workflows/sveltekit-frontend.yml'
+  pull_request:
+    branches: [ "main" ]
+    paths:
+      - 'src/thepit-ui/**'
+      - '.github/workflows/sveltekit-frontend.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: src/thepit-ui
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Run type checking
+      run: npm run check
+
+    - name: Build
+      run: npm run build
