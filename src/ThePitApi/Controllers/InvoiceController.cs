@@ -1,4 +1,6 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ThePit.Services.Commands.Invoice;
 using ThePit.Services.Interfaces;
 
 namespace ThePitApi.Controllers;
@@ -8,10 +10,12 @@ namespace ThePitApi.Controllers;
 public class InvoiceController : ControllerBase
 {
     private readonly IInvoiceService _invoiceService;
+    private readonly IMediator _mediator;
 
-    public InvoiceController(IInvoiceService invoiceService)
+    public InvoiceController(IInvoiceService invoiceService, IMediator mediator)
     {
         _invoiceService = invoiceService;
+        _mediator = mediator;
     }
 
     [HttpGet]
@@ -32,11 +36,11 @@ public class InvoiceController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<InvoiceDto>> Create([FromBody] CreateInvoiceDto dto, CancellationToken cancellationToken)
+    public async Task<ActionResult<InvoiceDto>> Create([FromBody] CreateInvoiceCommand command, CancellationToken cancellationToken)
     {
         try
         {
-            var invoice = await _invoiceService.CreateAsync(dto, cancellationToken);
+            var invoice = await _mediator.Send(command, cancellationToken);
             return CreatedAtAction(nameof(GetById), new { id = invoice.Id }, invoice);
         }
         catch (ArgumentException ex)
@@ -50,7 +54,8 @@ public class InvoiceController : ControllerBase
     {
         try
         {
-            var invoice = await _invoiceService.UpdateAsync(id, dto, cancellationToken);
+            var command = new UpdateInvoiceCommand(id, dto.InvoiceNumber, dto.Amount, dto.DueDate, dto.Status);
+            var invoice = await _mediator.Send(command, cancellationToken);
             return Ok(invoice);
         }
         catch (InvalidOperationException)
@@ -66,7 +71,8 @@ public class InvoiceController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {
-        var deleted = await _invoiceService.DeleteAsync(id, cancellationToken);
+        var command = new DeleteInvoiceCommand(id);
+        var deleted = await _mediator.Send(command, cancellationToken);
         if (!deleted)
             return NotFound();
 
