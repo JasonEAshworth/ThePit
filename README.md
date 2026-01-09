@@ -1,6 +1,6 @@
 # ThePit
 
-[![.NET Core Desktop](https://github.com/JasonEAshworth/ThePit/actions/workflows/dotnet-desktop.yml/badge.svg)](https://github.com/JasonEAshworth/ThePit/actions/workflows/dotnet-desktop.yml)
+[![.NET](https://github.com/JasonEAshworth/ThePit/actions/workflows/dotnet.yml/badge.svg)](https://github.com/JasonEAshworth/ThePit/actions/workflows/dotnet.yml)
 [![SvelteKit Frontend](https://github.com/JasonEAshworth/ThePit/actions/workflows/sveltekit-frontend.yml/badge.svg)](https://github.com/JasonEAshworth/ThePit/actions/workflows/sveltekit-frontend.yml)
 
 A .NET 8 REST API with a SvelteKit frontend for invoice and payment management.
