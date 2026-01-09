@@ -1,6 +1,8 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using ThePit.Services.Commands.Payments;
 using ThePit.Services.DTOs;
-using ThePit.Services.Interfaces;
+using ThePit.Services.Queries.Payments;
 
 namespace ThePitApi.Controllers;
 
@@ -8,24 +10,24 @@ namespace ThePitApi.Controllers;
 [Route("api/[controller]")]
 public class PaymentController : ControllerBase
 {
-    private readonly IPaymentService _paymentService;
+    private readonly IMediator _mediator;
 
-    public PaymentController(IPaymentService paymentService)
+    public PaymentController(IMediator mediator)
     {
-        _paymentService = paymentService;
+        _mediator = mediator;
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<PaymentDto>>> GetAll()
+    public async Task<ActionResult<IEnumerable<PaymentDto>>> GetAll(CancellationToken cancellationToken)
     {
-        var payments = await _paymentService.GetAllAsync();
+        var payments = await _mediator.Send(new GetAllPaymentsQuery(), cancellationToken);
         return Ok(payments);
     }
 
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<PaymentDto>> GetById(int id)
+    public async Task<ActionResult<PaymentDto>> GetById(int id, CancellationToken cancellationToken)
     {
-        var payment = await _paymentService.GetByIdAsync(id);
+        var payment = await _mediator.Send(new GetPaymentByIdQuery(id), cancellationToken);
         if (payment is null)
             return NotFound();
 
@@ -33,11 +35,11 @@ public class PaymentController : ControllerBase
     }
 
     [HttpGet("transaction/{transactionId}")]
-    public async Task<ActionResult<PaymentDto>> GetByTransactionId(string transactionId)
+    public async Task<ActionResult<PaymentDto>> GetByTransactionId(string transactionId, CancellationToken cancellationToken)
     {
         try
         {
-            var payment = await _paymentService.GetByTransactionIdAsync(transactionId);
+            var payment = await _mediator.Send(new GetPaymentByTransactionIdQuery(transactionId), cancellationToken);
             if (payment is null)
                 return NotFound();
 
@@ -50,18 +52,19 @@ public class PaymentController : ControllerBase
     }
 
     [HttpGet("invoice/{invoiceId:int}")]
-    public async Task<ActionResult<IEnumerable<PaymentDto>>> GetByInvoiceId(int invoiceId)
+    public async Task<ActionResult<IEnumerable<PaymentDto>>> GetByInvoiceId(int invoiceId, CancellationToken cancellationToken)
     {
-        var payments = await _paymentService.GetByInvoiceIdAsync(invoiceId);
+        var payments = await _mediator.Send(new GetPaymentsByInvoiceQuery(invoiceId), cancellationToken);
         return Ok(payments);
     }
 
     [HttpPost]
-    public async Task<ActionResult<PaymentDto>> Create([FromBody] CreatePaymentDto dto)
+    public async Task<ActionResult<PaymentDto>> Create([FromBody] CreatePaymentDto dto, CancellationToken cancellationToken)
     {
         try
         {
-            var payment = await _paymentService.CreateAsync(dto);
+            var command = new CreatePaymentCommand(dto.InvoiceId, dto.Amount, dto.PaymentMethod);
+            var payment = await _mediator.Send(command, cancellationToken);
             return CreatedAtAction(nameof(GetById), new { id = payment.Id }, payment);
         }
         catch (ArgumentException ex)
@@ -71,14 +74,12 @@ public class PaymentController : ControllerBase
     }
 
     [HttpPost("process")]
-    public async Task<ActionResult<PaymentDto>> ProcessPayment([FromBody] ProcessPaymentRequest request)
+    public async Task<ActionResult<PaymentDto>> ProcessPayment([FromBody] ProcessPaymentRequest request, CancellationToken cancellationToken)
     {
         try
         {
-            var payment = await _paymentService.ProcessPaymentAsync(
-                request.InvoiceId,
-                request.Amount,
-                request.PaymentMethod);
+            var command = new ProcessPaymentCommand(request.InvoiceId, request.Amount, request.PaymentMethod);
+            var payment = await _mediator.Send(command, cancellationToken);
             return Ok(payment);
         }
         catch (ArgumentException ex)
@@ -92,12 +93,12 @@ public class PaymentController : ControllerBase
     }
 
     [HttpPut("{id:int}/status")]
-    public async Task<ActionResult<PaymentDto>> UpdateStatus(int id, [FromBody] UpdatePaymentStatusRequest request)
+    public async Task<ActionResult<PaymentDto>> UpdateStatus(int id, [FromBody] UpdatePaymentStatusRequest request, CancellationToken cancellationToken)
     {
         try
         {
-            var dto = new UpdatePaymentDto { Id = id, Status = request.Status };
-            var payment = await _paymentService.UpdateStatusAsync(dto);
+            var command = new UpdatePaymentCommand(id, request.Status);
+            var payment = await _mediator.Send(command, cancellationToken);
             return Ok(payment);
         }
         catch (InvalidOperationException)
@@ -111,9 +112,9 @@ public class PaymentController : ControllerBase
     }
 
     [HttpDelete("{id:int}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {
-        var deleted = await _paymentService.DeleteAsync(id);
+        var deleted = await _mediator.Send(new DeletePaymentCommand(id), cancellationToken);
         if (!deleted)
             return NotFound();
 
