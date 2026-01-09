@@ -4,6 +4,7 @@ using ThePit.Services.Interfaces;
 
 namespace ThePit.Services.Services;
 
+[Obsolete("InvoiceService is deprecated. Use CQRS commands and queries instead.")]
 public class InvoiceService : IInvoiceService
 {
     private readonly IInvoiceRepository _repository;

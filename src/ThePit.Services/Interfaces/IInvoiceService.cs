@@ -1,5 +1,6 @@
 namespace ThePit.Services.Interfaces;
 
+[Obsolete("IInvoiceService is deprecated. Use CQRS commands and queries instead.")]
 public interface IInvoiceService
 {
     Task<InvoiceDto?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
