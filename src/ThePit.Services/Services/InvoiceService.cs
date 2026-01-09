@@ -35,6 +35,10 @@ public class InvoiceService : IInvoiceService
 
         ValidateCreateDto(dto);
 
+        var existing = await _repository.GetByInvoiceNumberAsync(dto.InvoiceNumber);
+        if (existing is not null)
+            throw new InvalidOperationException($"Invoice with number '{dto.InvoiceNumber}' already exists");
+
         var invoice = new Invoice
         {
             InvoiceNumber = dto.InvoiceNumber,
@@ -63,6 +67,9 @@ public class InvoiceService : IInvoiceService
         if (dto.InvoiceNumber is not null)
         {
             ValidateInvoiceNumber(dto.InvoiceNumber);
+            var duplicate = await _repository.GetByInvoiceNumberAsync(dto.InvoiceNumber);
+            if (duplicate is not null && duplicate.Id != id)
+                throw new InvalidOperationException($"Invoice with number '{dto.InvoiceNumber}' already exists");
             existing.InvoiceNumber = dto.InvoiceNumber;
         }
 
